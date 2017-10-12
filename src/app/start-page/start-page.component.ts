@@ -36,7 +36,7 @@ export class StartPageComponent {
           this.itemResource = new DataTableResource(this.photos);
           this.reloadItems({ limit: 10, offset: 0 });
           this.itemResource.count().then(count => this.itemCount = count);
-          f.reset();
+          f.reset({tag: "", userId: ""});
         }
       },
       (error) => {
@@ -46,7 +46,7 @@ export class StartPageComponent {
   }
 
   onCancel(f: NgForm) {
-    f.reset();
+    f.reset({tag: "", userId: ""});
     this.errorOcurred = false;
     this.responseIsEmpty = false;
   }

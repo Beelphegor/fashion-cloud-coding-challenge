@@ -12,8 +12,8 @@
         <div class="error-message" *ngIf="errorOcurred">An error has ocurred, please try again</div>
         <div class="error-message" *ngIf="responseIsEmpty">The request yielded no results, please try with another tag</div>
 
-        <button class="btn btn-primary pull-right" [disabled]="f.invalid">Submit</button>
-        <button class="btn btn-danger pull-right" (click)="onCancel(f)">Cancel</button>
+        <button class="btn btn-primary pull-right" [disabled]="f.invalid" type="submit">Submit</button>
+        <button class="btn btn-danger pull-right" (click)="onCancel(f)" type="button">Cancel</button>
       </form>
     </div>
   </div>

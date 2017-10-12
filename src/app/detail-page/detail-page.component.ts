@@ -15,9 +15,10 @@ export class DetailPageComponent implements OnInit {
   tag: string;
   userId: string;
   pageNumber: number = 1;
-  pageSize: number = 15;
+  pageSize: number = 14;
   pages: number[] = [];
   imagesArray: Image[] = [];
+  totalPages: number = 0;
 
   constructor(private flickrService: FlickrService, private route: ActivatedRoute) { }
 
@@ -37,7 +38,8 @@ export class DetailPageComponent implements OnInit {
     this.flickrService.searchByTag(this.tag, this.userId, this.pageSize, this.pageNumber).subscribe(
       (flickrResponse) => {
         var mappedImages: Image[] = [];
-        this.pages = Array(Math.ceil(flickrResponse.json().photos.total / this.pageSize)).fill(0).map((x, i) => i+1);
+        this.totalPages = flickrResponse.json().photos.total;
+        this.pages = Array(Math.ceil(this.totalPages / this.pageSize)).fill(0).map((x, i) => i+1);
         flickrResponse.json().photos.photo.map((p: FlickerPhoto) => {
           mappedImages.push(new Image(p.url_q, p.url_q, p.title, null));
         });
@@ -50,6 +52,8 @@ export class DetailPageComponent implements OnInit {
   }
 
   onPreviousPage() {
+    if(this.pageNumber === 1)
+      return;
     this.pageNumber = this.pageNumber - 1;
     this.getPictures();
   }
@@ -60,6 +64,8 @@ export class DetailPageComponent implements OnInit {
   }
 
   onNextPage() {
+    if(this.pageNumber >=this.totalPages)
+      return;
     this.pageNumber = this.pageNumber + 1;
     this.getPictures();
   }
