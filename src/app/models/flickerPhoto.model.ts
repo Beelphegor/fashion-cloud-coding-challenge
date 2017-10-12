@@ -18,5 +18,6 @@ export class FlickerPhoto {
         public url_q: string,
         public views: string,
         public width_q: string,
-        public tag: string) { }
+        public tag: string,
+        public userId: string) { }
 }

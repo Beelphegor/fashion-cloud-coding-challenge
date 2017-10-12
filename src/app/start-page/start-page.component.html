@@ -20,7 +20,7 @@
 
   <div class="row">
     <div class="col-xs-12">
-        <data-table id="photo-grid" [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)">
+        <data-table id="photo-grid" [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)" (rowClick)="rowClick($event)">
           <data-table-column [property]="'tag'" [header]="'Tag'" [resizable]="true"></data-table-column>
           <data-table-column [property]="'url_q'" [header]="'Image'" [resizable]="true"></data-table-column>
           <data-table-column [property]="'ownername'" [header]="'Owner'" [sortable]="true" [resizable]="true"></data-table-column>

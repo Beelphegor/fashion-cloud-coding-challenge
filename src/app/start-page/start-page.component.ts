@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { DataTableResource } from 'angular-4-data-table';
 import { FlickrService } from 'app/services/flickr.service';
 import { FlickerPhoto } from 'app/models/flickerPhoto.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start-page',
@@ -18,7 +19,7 @@ export class StartPageComponent {
   itemCount = 0;
   items = [];
 
-  constructor(private flickrService: FlickrService) {
+  constructor(private flickrService: FlickrService, private router: Router) {
   }
 
   onSubmit(f: NgForm) {
@@ -30,7 +31,8 @@ export class StartPageComponent {
         if (response.photos.total === "0") {
           this.responseIsEmpty = true;
         } else {
-          this.photos.push(Object.assign({}, response.photos.photo[0], { tag: f.value.tag }));
+          console.log(f.value);
+          this.photos.push(Object.assign({}, response.photos.photo[0], { tag: f.value.tag, userId: f.value.userId }));
           this.itemResource = new DataTableResource(this.photos);
           this.reloadItems({ limit: 10, offset: 0 });
           this.itemResource.count().then(count => this.itemCount = count);
@@ -51,6 +53,10 @@ export class StartPageComponent {
 
   reloadItems(params) {
     this.itemResource.query(params).then(items => this.items = items);
+  }
+
+  rowClick(params: any) {
+    this.router.navigate([`details/${params.row.item.tag}`], { queryParams: { userId: params.row.item.userId } });
   }
 
 }
