@@ -25,7 +25,7 @@ export class StartPageComponent {
   onSubmit(f: NgForm) {
     this.errorOcurred = false;
     this.responseIsEmpty = false;
-    this.flickrService.searchByTag(f.value).subscribe(
+    this.flickrService.searchByTag(f.value.tag, f.value.userId, 1).subscribe(
       (flickrResponse) => {
         const response = flickrResponse.json();
         if (response.photos.total === "0") {
